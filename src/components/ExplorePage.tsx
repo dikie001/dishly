@@ -35,7 +35,7 @@ export const ExplorePage: React.FC = () => {
         for (const category of categoriesToFetch) {
           try {
             const meals = await mealDBService.getMealsByCategory(
-              category.strCategory
+              category.strCategory,
             );
             allMeals.push(...meals.slice(0, 4)); // Get 4 meals per category
           } catch (err) {
@@ -51,7 +51,7 @@ export const ExplorePage: React.FC = () => {
 
         // Convert meals to Recipe format
         const recipes = allMeals.map((meal) =>
-          mealDBService.mealToRecipe(meal)
+          mealDBService.mealToRecipe(meal),
         );
         setRecipes(recipes);
       } catch (err) {

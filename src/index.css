@@ -1,8 +1,23 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap");
 @import "tailwindcss";
 
+:root {
+  /* Food Theme Colors */
+  --primary-dark: #8b4513;
+  --primary-warm: #d4753b;
+  --primary-light: #f5a962;
+  --accent-red: #e5421f;
+  --accent-orange: #ff8c42;
+  --accent-gold: #ffd700;
+  --accent-green: #2d894d;
+  --bg-cream: #fffaf0;
+  --bg-light: #fcf5ef;
+  --text-dark: #3d2817;
+  --text-light: #6b5447;
+}
+
 * {
-  transition: color 0.2s ease;
+  transition: color 0.2s ease, background-color 0.2s ease;
 }
 
 html {
@@ -13,8 +28,8 @@ html {
 
 body {
   font-family: "Inter", sans-serif;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  color: #1e293b;
+  background: linear-gradient(135deg, var(--bg-cream) 0%, var(--bg-light) 100%);
+  color: var(--text-dark);
   overflow-x: hidden;
 }
 
@@ -25,28 +40,28 @@ h4,
 h5,
 h6 {
   font-family: "Playfair Display", serif;
+  color: var(--text-dark);
 }
 
 /* Scrollbar Styling */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: linear-gradient(to bottom, var(--bg-light), var(--bg-cream));
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #e2e8f0;
-  border-radius: 4px;
+  background: linear-gradient(to bottom, var(--accent-orange), var(--primary-warm));
+  border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #cbd5e1;
+  background: linear-gradient(to bottom, var(--primary-warm), var(--primary-dark));
 }
 
-/* Animation keyframes */
 @keyframes shimmer {
   0% {
     background-position: -1000px 0;
@@ -69,10 +84,30 @@ h6 {
 @keyframes glow {
   0%,
   100% {
-    box-shadow: 0 0 5px rgba(16, 185, 129, 0.3);
+    box-shadow: 0 0 5px rgba(229, 66, 31, 0.3);
   }
   50% {
-    box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+    box-shadow: 0 0 20px rgba(229, 66, 31, 0.5);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
@@ -88,35 +123,78 @@ h6 {
   animation: glow 2s ease-in-out infinite;
 }
 
-/* Form inputs */
+.slide-in {
+  animation: slideInUp 0.6s ease-out;
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
 input:focus,
 textarea:focus,
 select:focus {
   outline: none;
   ring: 2px;
-  ring-color: rgb(16 185 129);
+  ring-color: var(--accent-orange);
 }
 
 input::placeholder,
 textarea::placeholder {
-  color: rgb(148 163 184);
+  color: var(--text-light);
 }
 
 /* Links */
 a {
-  color: rgb(5 150 105);
+  color: var(--accent-orange);
   text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 a:hover {
-  color: rgb(4 120 87);
+  color: var(--primary-warm);
 }
 
 /* Code blocks */
 code {
-  background: rgb(241 245 249);
-  padding: 0.5rem 0.5rem;
+  background: rgba(212, 117, 59, 0.1);
+  padding: 0.5rem;
   border-radius: 0.25rem;
-  font-family: monospace;
+  font-family: "Courier New", monospace;
   font-size: 0.875rem;
+  color: var(--primary-dark);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent-orange) 0%, var(--primary-warm) 100%);
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: none;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(229, 66, 31, 0.2);
+}
+
+.card-shadow {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+  transition: box-shadow 0.3s;
+}
+
+.card-shadow:hover {
+  box-shadow: 0 12px 24px rgba(229, 66, 31, 0.15);
+}
+
+.gradient-food {
+  background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-red) 100%);
+}
+
+.pattern-dots {
+  background-image: radial-gradient(circle, rgba(212, 117, 59, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
 }

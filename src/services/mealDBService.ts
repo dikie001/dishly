@@ -1,7 +1,7 @@
-import axios from 'axios';
-import { Recipe, Ingredient, Step } from '../types/recipe';
+import axios from "axios";
+import { Recipe, Ingredient, Step } from "../types/recipe";
 
-const API_BASE = 'https://www.themealdb.com/api/json/v1/1';
+const API_BASE = "https://www.themealdb.com/api/json/v1/1";
 
 interface MealDBMeal {
   idMeal: string;
@@ -26,7 +26,7 @@ export const mealDBService = {
       const response = await axios.get(`${API_BASE}/categories.php`);
       return response.data.categories || [];
     } catch (error) {
-      console.error('Error fetching categories:', error);
+      console.error("Error fetching categories:", error);
       throw error;
     }
   },
@@ -37,7 +37,7 @@ export const mealDBService = {
       const response = await axios.get(`${API_BASE}/filter.php?c=${category}`);
       return response.data.meals || [];
     } catch (error) {
-      console.error('Error fetching meals by category:', error);
+      console.error("Error fetching meals by category:", error);
       throw error;
     }
   },
@@ -48,7 +48,7 @@ export const mealDBService = {
       const response = await axios.get(`${API_BASE}/filter.php?a=${area}`);
       return response.data.meals || [];
     } catch (error) {
-      console.error('Error fetching meals by area:', error);
+      console.error("Error fetching meals by area:", error);
       throw error;
     }
   },
@@ -56,10 +56,12 @@ export const mealDBService = {
   // Search meals by name
   async searchMeals(name: string): Promise<MealDBMeal[]> {
     try {
-      const response = await axios.get(`${API_BASE}/search.php?s=${encodeURIComponent(name)}`);
+      const response = await axios.get(
+        `${API_BASE}/search.php?s=${encodeURIComponent(name)}`,
+      );
       return response.data.meals || [];
     } catch (error) {
-      console.error('Error searching meals:', error);
+      console.error("Error searching meals:", error);
       throw error;
     }
   },
@@ -70,7 +72,7 @@ export const mealDBService = {
       const response = await axios.get(`${API_BASE}/lookup.php?i=${id}`);
       return response.data.meals?.[0] || null;
     } catch (error) {
-      console.error('Error fetching meal details:', error);
+      console.error("Error fetching meal details:", error);
       throw error;
     }
   },
@@ -81,7 +83,7 @@ export const mealDBService = {
       const response = await axios.get(`${API_BASE}/random.php`);
       return response.data.meals?.[0] || null;
     } catch (error) {
-      console.error('Error fetching random meal:', error);
+      console.error("Error fetching random meal:", error);
       throw error;
     }
   },
@@ -96,8 +98,8 @@ export const mealDBService = {
         ingredients.push({
           id: `${i}`,
           name: ingredient.trim(),
-          amount: measure?.trim() || '1',
-          unit: '',
+          amount: measure?.trim() || "1",
+          unit: "",
         });
       }
     }
@@ -109,9 +111,9 @@ export const mealDBService = {
     const ingredients = this.extractIngredients(meal);
 
     // Parse instructions into steps
-    const instructionText = meal.strInstructions || '';
+    const instructionText = meal.strInstructions || "";
     const steps: Step[] = instructionText
-      .split('.')
+      .split(".")
       .filter((step) => step.trim().length > 0)
       .map((step, index) => ({
         id: `step-${index}`,
@@ -144,8 +146,8 @@ export const mealDBService = {
       return times[category] || 15;
     };
 
-    const category = meal.strCategory || 'Other';
-    const area = meal.strArea || 'Unknown';
+    const category = meal.strCategory || "Other";
+    const area = meal.strArea || "Unknown";
 
     return {
       id: meal.idMeal,
@@ -155,17 +157,20 @@ export const mealDBService = {
       servings: 4,
       prepTime: estimatePrepTime(category),
       cookTime: estimateCookTime(category),
-      difficulty: 'medium',
+      difficulty: "medium",
       cuisine: area,
       tags: [category.toLowerCase(), area.toLowerCase()],
       ingredients,
-      steps: steps.length > 0 ? steps : [
-        {
-          id: '1',
-          number: 1,
-          description: meal.strInstructions || 'Prepare and enjoy!',
-        },
-      ],
+      steps:
+        steps.length > 0
+          ? steps
+          : [
+              {
+                id: "1",
+                number: 1,
+                description: meal.strInstructions || "Prepare and enjoy!",
+              },
+            ],
       createdAt: new Date(),
       updatedAt: new Date(),
       rating: Math.random() * 5,
