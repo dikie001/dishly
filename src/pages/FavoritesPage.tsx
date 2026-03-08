@@ -10,7 +10,7 @@ export const FavoritesPage: React.FC = () => {
   const { recipes, favorites } = useRecipeStore();
 
   const favoriteRecipes = recipes.filter((recipe) =>
-    favorites.includes(recipe.id)
+    favorites.includes(recipe.id),
   );
 
   return (
@@ -28,8 +28,8 @@ export const FavoritesPage: React.FC = () => {
               Your Favorites
             </h1>
             <p className="text-xl text-gray-600">
-              {favoriteRecipes.length} recipe{favoriteRecipes.length !== 1 ? "s" : ""}{" "}
-              saved
+              {favoriteRecipes.length} recipe
+              {favoriteRecipes.length !== 1 ? "s" : ""} saved
             </p>
           </motion.div>
         </div>

@@ -8,13 +8,13 @@ const HomePage = lazy(() => import("./pages/HomePage"));
 const RecipeDetailPage = lazy(() =>
   import("./pages/RecipeDetailPage").then((m) => ({
     default: m.RecipeDetailPage,
-  }))
+  })),
 );
 const FavoritesPage = lazy(() =>
-  import("./pages/FavoritesPage").then((m) => ({ default: m.FavoritesPage }))
+  import("./pages/FavoritesPage").then((m) => ({ default: m.FavoritesPage })),
 );
 const CategoriesPage = lazy(() =>
-  import("./pages/CategoriesPage").then((m) => ({ default: m.CategoriesPage }))
+  import("./pages/CategoriesPage").then((m) => ({ default: m.CategoriesPage })),
 );
 
 const PageLoader = () => (

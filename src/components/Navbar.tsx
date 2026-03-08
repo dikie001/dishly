@@ -54,7 +54,11 @@ export const Navbar: React.FC = () => {
                     <motion.div
                       className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-orange-500 to-red-500"
                       layoutId="underline"
-                      transition={{ type: "spring", stiffness: 380, damping: 40 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 380,
+                        damping: 40,
+                      }}
                     />
                   )}
                 </Link>

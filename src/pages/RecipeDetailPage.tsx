@@ -147,9 +147,7 @@ export const RecipeDetailPage: React.FC = () => {
                 </div>
               </div>
               <div className="text-center">
-                <div className="font-bold text-orange-600 text-lg mb-1">
-                  ⭐
-                </div>
+                <div className="font-bold text-orange-600 text-lg mb-1">⭐</div>
                 <div className="text-sm text-gray-600">Rating</div>
                 <div className="text-xl font-bold text-gray-900">
                   {recipe.rating?.toFixed(1)}
@@ -212,7 +210,7 @@ export const RecipeDetailPage: React.FC = () => {
           <div>
             {/* Servings Adjuster */}
             <motion.div
-              initial={{ opacity: 0, y: 20}}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
               className="sticky top-20 bg-white p-6 rounded-2xl shadow-lg border border-orange-200 mb-6"
@@ -231,7 +229,9 @@ export const RecipeDetailPage: React.FC = () => {
                   <input
                     type="number"
                     value={servings}
-                    onChange={(e) => setServings(Math.max(1, parseInt(e.target.value) || 1))}
+                    onChange={(e) =>
+                      setServings(Math.max(1, parseInt(e.target.value) || 1))
+                    }
                     className="w-16 px-3 py-2 border border-orange-300 rounded-lg text-center font-semibold focus:outline-none focus:ring-2 focus:ring-orange-500"
                   />
                   <span className="text-gray-600">servings</span>
@@ -293,7 +293,9 @@ export const RecipeDetailPage: React.FC = () => {
                     : "bg-orange-100 text-orange-600 hover:bg-orange-200"
                 }`}
               >
-                <FiHeart className={`w-5 h-5 ${favorite ? "fill-current" : ""}`} />
+                <FiHeart
+                  className={`w-5 h-5 ${favorite ? "fill-current" : ""}`}
+                />
                 {favorite ? "Remove from Favorites" : "Add to Favorites"}
               </button>
 

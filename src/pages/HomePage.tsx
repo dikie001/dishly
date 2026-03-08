@@ -23,13 +23,13 @@ const HomePage: React.FC = () => {
 
         for (const category of categories.slice(0, 6)) {
           const meals = await mealDBService.getMealsByCategory(
-            category.strCategory
+            category.strCategory,
           );
           allMeals.push(...meals.slice(0, 3));
         }
 
         const convertedRecipes = allMeals.map((meal) =>
-          mealDBService.mealToRecipe(meal)
+          mealDBService.mealToRecipe(meal),
         );
         setRecipes(convertedRecipes);
         setFeaturedRecipes(convertedRecipes.slice(0, 6));

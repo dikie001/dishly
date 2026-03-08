@@ -39,9 +39,7 @@ export const CategoriesPage: React.FC = () => {
       try {
         setIsLoading(true);
         const meals = await mealDBService.getMealsByCategory(selectedCategory);
-        const converted = meals.map((meal) =>
-          mealDBService.mealToRecipe(meal)
-        );
+        const converted = meals.map((meal) => mealDBService.mealToRecipe(meal));
         setRecipes(converted);
       } catch (err) {
         console.error("Error loading category recipes:", err);

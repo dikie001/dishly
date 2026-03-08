@@ -22,10 +22,7 @@ export const RecipeGridCard: React.FC<RecipeGridCardProps> = ({ recipe }) => {
   };
 
   return (
-    <motion.div
-      whileHover={{ y: -8 }}
-      className="group cursor-pointer"
-    >
+    <motion.div whileHover={{ y: -8 }} className="group cursor-pointer">
       <div
         onClick={() => navigate(`/recipe/${recipe.id}`)}
         className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-orange-100 h-full flex flex-col"
@@ -91,7 +88,9 @@ export const RecipeGridCard: React.FC<RecipeGridCardProps> = ({ recipe }) => {
                   : "bg-orange-100 text-orange-600 hover:bg-orange-200"
               }`}
             >
-              <FiHeart className={`w-4 h-4 ${favorite ? "fill-current" : ""}`} />
+              <FiHeart
+                className={`w-4 h-4 ${favorite ? "fill-current" : ""}`}
+              />
               {favorite ? "Saved" : "Save"}
             </button>
 
