@@ -1,9 +1,9 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { FiClock, FiUsers, FiHeart, FiShare2, FiCopy } from 'react-icons/fi';
-import { Recipe } from '../types/recipe';
-import { useRecipeStore } from '../store/recipeStore';
-import { copyRecipeToClipboard, shareRecipe } from '../utils/recipeUtils';
+import React from "react";
+import { motion } from "framer-motion";
+import { FiClock, FiUsers, FiHeart, FiShare2, FiCopy } from "react-icons/fi";
+import { Recipe } from "../types/recipe";
+import { useRecipeStore } from "../store/recipeStore";
+import { copyRecipeToClipboard, shareRecipe } from "../utils/recipeUtils";
 
 interface RecipeCardProps {
   recipe: Recipe;
@@ -16,9 +16,9 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onClick }) => {
   const totalTime = recipe.prepTime + recipe.cookTime;
 
   const difficultyColors = {
-    easy: 'bg-emerald-100 text-emerald-700',
-    medium: 'bg-amber-100 text-amber-700',
-    hard: 'bg-rose-100 text-rose-700',
+    easy: "bg-emerald-100 text-emerald-700",
+    medium: "bg-amber-100 text-amber-700",
+    hard: "bg-rose-100 text-rose-700",
   };
 
   const handleShare = async (e: React.MouseEvent) => {
@@ -26,7 +26,7 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onClick }) => {
     const success = await shareRecipe(recipe);
     if (success) {
       // Show toast notification
-      console.log('Recipe shared successfully');
+      console.log("Recipe shared successfully");
     }
   };
 
@@ -35,7 +35,7 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onClick }) => {
     const success = await copyRecipeToClipboard(recipe);
     if (success) {
       // Show toast notification
-      console.log('Recipe copied to clipboard');
+      console.log("Recipe copied to clipboard");
     }
   };
 
@@ -63,7 +63,9 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onClick }) => {
 
         {/* Badge */}
         <div className="absolute top-3 right-3">
-          <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${difficultyColors[recipe.difficulty]}`}>
+          <span
+            className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${difficultyColors[recipe.difficulty]}`}
+          >
             {recipe.difficulty}
           </span>
         </div>
@@ -104,11 +106,11 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onClick }) => {
             onClick={handleFavorite}
             className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg font-medium text-sm transition-colors ${
               favorite
-                ? 'bg-rose-100 text-rose-600 hover:bg-rose-200'
-                : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                ? "bg-rose-100 text-rose-600 hover:bg-rose-200"
+                : "bg-slate-100 text-slate-600 hover:bg-slate-200"
             }`}
           >
-            <FiHeart className={`w-4 h-4 ${favorite ? 'fill-current' : ''}`} />
+            <FiHeart className={`w-4 h-4 ${favorite ? "fill-current" : ""}`} />
             Favorite
           </motion.button>
 

@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import { FilterComponent } from './FilterComponent';
-import { RecipeCard } from './RecipeCard';
-import { RecipeModal } from './RecipeModal';
-import { Loader } from './Loaders';
-import { useRecipeStore } from '../store/recipeStore';
-import { sampleRecipes } from '../data/sampleRecipes';
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { FilterComponent } from "./FilterComponent";
+import { RecipeCard } from "./RecipeCard";
+import { RecipeModal } from "./RecipeModal";
+import { Loader } from "./Loaders";
+import { useRecipeStore } from "../store/recipeStore";
+import { sampleRecipes } from "../data/sampleRecipes";
 
 export const ExplorePage: React.FC = () => {
-  const { setRecipes, getFilteredRecipes, selectRecipe, selectedRecipe } = useRecipeStore();
+  const { setRecipes, getFilteredRecipes, selectRecipe, selectedRecipe } =
+    useRecipeStore();
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -53,7 +54,8 @@ export const ExplorePage: React.FC = () => {
               Discover Delicious Recipes
             </h1>
             <p className="text-xl text-emerald-50 mb-8 max-w-2xl mx-auto">
-              Explore thousands of recipes from around the world. Cook, share, and enjoy amazing meals with your loved ones.
+              Explore thousands of recipes from around the world. Cook, share,
+              and enjoy amazing meals with your loved ones.
             </p>
           </motion.div>
         </div>
@@ -76,8 +78,12 @@ export const ExplorePage: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               className="bg-white rounded-xl p-12 shadow-lg"
             >
-              <p className="text-xl text-slate-600 mb-4">No recipes found matching your criteria</p>
-              <p className="text-slate-500 mb-6">Try adjusting your filters to find more recipes</p>
+              <p className="text-xl text-slate-600 mb-4">
+                No recipes found matching your criteria
+              </p>
+              <p className="text-slate-500 mb-6">
+                Try adjusting your filters to find more recipes
+              </p>
               <button
                 onClick={() => window.location.reload()}
                 className="px-6 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-colors"
@@ -94,7 +100,7 @@ export const ExplorePage: React.FC = () => {
               animate={{ opacity: 1 }}
               className="text-slate-600 mb-6 text-sm"
             >
-              Found {recipes.length} recipe{recipes.length !== 1 ? 's' : ''}
+              Found {recipes.length} recipe{recipes.length !== 1 ? "s" : ""}
             </motion.p>
 
             {/* Recipe Grid */}
@@ -106,10 +112,7 @@ export const ExplorePage: React.FC = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <RecipeCard
-                    recipe={recipe}
-                    onClick={handleRecipeClick}
-                  />
+                  <RecipeCard recipe={recipe} onClick={handleRecipeClick} />
                 </motion.div>
               ))}
             </div>

@@ -1,12 +1,14 @@
-import { Recipe } from '../types/recipe';
+import { Recipe } from "../types/recipe";
 
-export const copyRecipeToClipboard = async (recipe: Recipe): Promise<boolean> => {
+export const copyRecipeToClipboard = async (
+  recipe: Recipe,
+): Promise<boolean> => {
   try {
     const recipeText = formatRecipeForCopy(recipe);
     await navigator.clipboard.writeText(recipeText);
     return true;
   } catch (error) {
-    console.error('Failed to copy recipe:', error);
+    console.error("Failed to copy recipe:", error);
     return false;
   }
 };
@@ -23,7 +25,7 @@ export const shareRecipe = async (recipe: Recipe): Promise<boolean> => {
       await navigator.share(shareData);
       return true;
     } catch (error) {
-      console.error('Error sharing:', error);
+      console.error("Error sharing:", error);
       return false;
     }
   } else {
@@ -32,15 +34,22 @@ export const shareRecipe = async (recipe: Recipe): Promise<boolean> => {
       await navigator.clipboard.writeText(shareData.url);
       return true;
     } catch (error) {
-      console.error('Failed to copy share link:', error);
+      console.error("Failed to copy share link:", error);
       return false;
     }
   }
 };
 
-export const shareToSocial = (recipe: Recipe, platform: 'twitter' | 'facebook' | 'pinterest'): void => {
-  const url = encodeURIComponent(`${window.location.origin}?recipe=${recipe.id}`);
-  const text = encodeURIComponent(`Check out this amazing recipe: ${recipe.title}`);
+export const shareToSocial = (
+  recipe: Recipe,
+  platform: "twitter" | "facebook" | "pinterest",
+): void => {
+  const url = encodeURIComponent(
+    `${window.location.origin}?recipe=${recipe.id}`,
+  );
+  const text = encodeURIComponent(
+    `Check out this amazing recipe: ${recipe.title}`,
+  );
 
   const urls = {
     twitter: `https://twitter.com/intent/tweet?url=${url}&text=${text}`,
@@ -48,7 +57,7 @@ export const shareToSocial = (recipe: Recipe, platform: 'twitter' | 'facebook' |
     pinterest: `https://pinterest.com/pin/create/button/?url=${url}&description=${text}`,
   };
 
-  window.open(urls[platform], '_blank', 'width=600,height=400');
+  window.open(urls[platform], "_blank", "width=600,height=400");
 };
 
 export const generateRecipeJSON = (recipe: Recipe): string => {
@@ -57,11 +66,11 @@ export const generateRecipeJSON = (recipe: Recipe): string => {
 
 export const downloadRecipeAsJSON = (recipe: Recipe): void => {
   const json = generateRecipeJSON(recipe);
-  const blob = new Blob([json], { type: 'application/json' });
+  const blob = new Blob([json], { type: "application/json" });
   const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
+  const link = document.createElement("a");
   link.href = url;
-  link.download = `${recipe.title.replace(/\s+/g, '-').toLowerCase()}.json`;
+  link.download = `${recipe.title.replace(/\s+/g, "-").toLowerCase()}.json`;
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
@@ -70,7 +79,7 @@ export const downloadRecipeAsJSON = (recipe: Recipe): void => {
 
 export const downloadRecipeAsPDF = (recipe: Recipe): void => {
   const content = formatRecipeForPrint(recipe);
-  const printWindow = window.open('', '_blank');
+  const printWindow = window.open("", "_blank");
   if (printWindow) {
     printWindow.document.write(content);
     printWindow.document.close();
@@ -81,11 +90,11 @@ export const downloadRecipeAsPDF = (recipe: Recipe): void => {
 export const formatRecipeForCopy = (recipe: Recipe): string => {
   const ingredientsList = recipe.ingredients
     .map((ing) => `• ${ing.amount} ${ing.unit} ${ing.name}`)
-    .join('\n');
+    .join("\n");
 
   const stepsList = recipe.steps
     .map((step) => `${step.number}. ${step.description}`)
-    .join('\n');
+    .join("\n");
 
   return `${recipe.title}
 
@@ -106,11 +115,11 @@ ${stepsList}`;
 export const formatRecipeForPrint = (recipe: Recipe): string => {
   const ingredientsList = recipe.ingredients
     .map((ing) => `<li>${ing.amount} ${ing.unit} ${ing.name}</li>`)
-    .join('');
+    .join("");
 
   const stepsList = recipe.steps
     .map((step) => `<li>${step.description}</li>`)
-    .join('');
+    .join("");
 
   return `
 <!DOCTYPE html>
@@ -149,13 +158,16 @@ export const formatRecipeForPrint = (recipe: Recipe): string => {
 
 export const calculateServingMultiplier = (
   originalServings: number,
-  desiredServings: number
+  desiredServings: number,
 ): number => {
   return desiredServings / originalServings;
 };
 
-export const adjustIngredient = (amount: string, multiplier: number): string => {
+export const adjustIngredient = (
+  amount: string,
+  multiplier: number,
+): string => {
   const num = parseFloat(amount);
   if (isNaN(num)) return amount;
-  return (num * multiplier).toFixed(2).replace(/\.?0+$/, '');
+  return (num * multiplier).toFixed(2).replace(/\.?0+$/, "");
 };

@@ -20,7 +20,7 @@ export interface Recipe {
   servings: number;
   prepTime: number;
   cookTime: number;
-  difficulty: 'easy' | 'medium' | 'hard';
+  difficulty: "easy" | "medium" | "hard";
   cuisine: string;
   tags: string[];
   ingredients: Ingredient[];
@@ -34,7 +34,7 @@ export interface Recipe {
 
 export interface RecipeFilter {
   cuisine?: string;
-  difficulty?: 'easy' | 'medium' | 'hard';
+  difficulty?: "easy" | "medium" | "hard";
   maxTime?: number;
   tags?: string[];
   searchTerm?: string;

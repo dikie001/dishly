@@ -1,28 +1,44 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FiFilter, FiX, FiSearch } from 'react-icons/fi';
-import { useRecipeStore } from '../store/recipeStore';
-import { RecipeFilter } from '../types/recipe';
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { FiFilter, FiX, FiSearch } from "react-icons/fi";
+import { useRecipeStore } from "../store/recipeStore";
+import { RecipeFilter } from "../types/recipe";
 
 interface FilterComponentProps {
   onFilterChange?: () => void;
 }
 
-export const FilterComponent: React.FC<FilterComponentProps> = ({ onFilterChange }) => {
+export const FilterComponent: React.FC<FilterComponentProps> = ({
+  onFilterChange,
+}) => {
   const { filter, setFilter, clearFilter } = useRecipeStore();
   const [isOpen, setIsOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState(filter.searchTerm || '');
-  const [selectedDifficulty, setSelectedDifficulty] = useState<string>(filter.difficulty || '');
-  const [selectedCuisine, setSelectedCuisine] = useState<string>(filter.cuisine || '');
+  const [searchTerm, setSearchTerm] = useState(filter.searchTerm || "");
+  const [selectedDifficulty, setSelectedDifficulty] = useState<string>(
+    filter.difficulty || "",
+  );
+  const [selectedCuisine, setSelectedCuisine] = useState<string>(
+    filter.cuisine || "",
+  );
   const [maxTime, setMaxTime] = useState<number>(filter.maxTime || 120);
 
-  const cuisines = ['Italian', 'Asian', 'Mexican', 'Indian', 'Mediterranean', 'American', 'French', 'Thai'];
-  const difficulties = ['easy', 'medium', 'hard'];
+  const cuisines = [
+    "Italian",
+    "Asian",
+    "Mexican",
+    "Indian",
+    "Mediterranean",
+    "American",
+    "French",
+    "Thai",
+  ];
+  const difficulties = ["easy", "medium", "hard"];
 
   const handleApplyFilters = () => {
     const newFilter: RecipeFilter = {
       searchTerm: searchTerm || undefined,
-      difficulty: (selectedDifficulty as 'easy' | 'medium' | 'hard') || undefined,
+      difficulty:
+        (selectedDifficulty as "easy" | "medium" | "hard") || undefined,
       cuisine: selectedCuisine || undefined,
       maxTime: maxTime !== 120 ? maxTime : undefined,
     };
@@ -33,9 +49,9 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({ onFilterChange
   };
 
   const handleReset = () => {
-    setSearchTerm('');
-    setSelectedDifficulty('');
-    setSelectedCuisine('');
+    setSearchTerm("");
+    setSelectedDifficulty("");
+    setSelectedCuisine("");
     setMaxTime(120);
     clearFilter();
     onFilterChange?.();
@@ -75,8 +91,8 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({ onFilterChange
           onClick={() => setIsOpen(!isOpen)}
           className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
             hasActiveFilters
-              ? 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
-              : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              ? "bg-emerald-100 text-emerald-700 hover:bg-emerald-200"
+              : "bg-slate-100 text-slate-600 hover:bg-slate-200"
           }`}
         >
           <FiFilter className="w-5 h-5" />
@@ -100,24 +116,30 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({ onFilterChange
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
+            animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             className="bg-white border border-slate-200 rounded-xl p-6 mb-6 space-y-6 shadow-lg"
           >
             {/* Difficulty Filter */}
             <div>
-              <label className="block text-sm font-semibold text-slate-900 mb-3">Difficulty Level</label>
+              <label className="block text-sm font-semibold text-slate-900 mb-3">
+                Difficulty Level
+              </label>
               <div className="flex gap-3 flex-wrap">
                 {difficulties.map((level) => (
                   <motion.button
                     key={level}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    onClick={() => setSelectedDifficulty(selectedDifficulty === level ? '' : level)}
+                    onClick={() =>
+                      setSelectedDifficulty(
+                        selectedDifficulty === level ? "" : level,
+                      )
+                    }
                     className={`px-4 py-2 rounded-lg font-medium transition-colors ${
                       selectedDifficulty === level
-                        ? 'bg-emerald-500 text-white'
-                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                        ? "bg-emerald-500 text-white"
+                        : "bg-slate-100 text-slate-600 hover:bg-slate-200"
                     }`}
                   >
                     {level.charAt(0).toUpperCase() + level.slice(1)}
@@ -128,7 +150,9 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({ onFilterChange
 
             {/* Cuisine Filter */}
             <div>
-              <label className="block text-sm font-semibold text-slate-900 mb-3">Cuisine</label>
+              <label className="block text-sm font-semibold text-slate-900 mb-3">
+                Cuisine
+              </label>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                 {cuisines.map((cuisine) => (
                   <motion.button
@@ -136,12 +160,14 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({ onFilterChange
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() =>
-                      setSelectedCuisine(selectedCuisine === cuisine ? '' : cuisine)
+                      setSelectedCuisine(
+                        selectedCuisine === cuisine ? "" : cuisine,
+                      )
                     }
                     className={`px-3 py-2 rounded-lg font-medium text-sm transition-colors ${
                       selectedCuisine === cuisine
-                        ? 'bg-emerald-500 text-white'
-                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                        ? "bg-emerald-500 text-white"
+                        : "bg-slate-100 text-slate-600 hover:bg-slate-200"
                     }`}
                   >
                     {cuisine}

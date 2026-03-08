@@ -1,16 +1,16 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React from "react";
+import { motion } from "framer-motion";
 
 interface LoaderProps {
-  size?: 'sm' | 'md' | 'lg';
+  size?: "sm" | "md" | "lg";
   text?: string;
 }
 
-export const Loader: React.FC<LoaderProps> = ({ size = 'md', text }) => {
+export const Loader: React.FC<LoaderProps> = ({ size = "md", text }) => {
   const sizes = {
-    sm: 'w-8 h-8',
-    md: 'w-12 h-12',
-    lg: 'w-16 h-16',
+    sm: "w-8 h-8",
+    md: "w-12 h-12",
+    lg: "w-16 h-16",
   };
 
   return (
@@ -19,7 +19,7 @@ export const Loader: React.FC<LoaderProps> = ({ size = 'md', text }) => {
         <motion.div
           className={`${sizes[size]} border-4 border-slate-200 border-t-emerald-500 rounded-full`}
           animate={{ rotate: 360 }}
-          transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
         />
       </div>
       {text && (
@@ -42,11 +42,12 @@ export const SkeletonLoader: React.FC<{ count?: number }> = ({ count = 1 }) => {
         <motion.div
           key={i}
           className="h-32 bg-slate-200 rounded-lg"
-          animate={{ backgroundPosition: ['200% 0', '-200% 0'] }}
+          animate={{ backgroundPosition: ["200% 0", "-200% 0"] }}
           transition={{ duration: 1.5, repeat: Infinity }}
           style={{
-            backgroundImage: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)',
-            backgroundSize: '200% 100%',
+            backgroundImage:
+              "linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)",
+            backgroundSize: "200% 100%",
           }}
         />
       ))}

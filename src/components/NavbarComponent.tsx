@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { FiMenu, FiX, FiSearch, FiHeart } from 'react-icons/fi';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { FiMenu, FiX, FiSearch, FiHeart } from "react-icons/fi";
+import { motion, AnimatePresence } from "framer-motion";
 
 export const NavbarComponent: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,10 +9,10 @@ export const NavbarComponent: React.FC = () => {
   const location = useLocation();
 
   const navItems = [
-    { label: 'Explore', href: '/' },
-    { label: 'Favorites', href: '/favorites' },
-    { label: 'Categories', href: '/categories' },
-    { label: 'My Recipes', href: '/my-recipes' },
+    { label: "Explore", href: "/" },
+    { label: "Favorites", href: "/favorites" },
+    { label: "Categories", href: "/categories" },
+    { label: "My Recipes", href: "/my-recipes" },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -40,8 +40,8 @@ export const NavbarComponent: React.FC = () => {
                   to={item.href}
                   className={`relative text-sm font-medium transition-colors ${
                     isActive(item.href)
-                      ? 'text-emerald-600'
-                      : 'text-slate-600 hover:text-slate-900'
+                      ? "text-emerald-600"
+                      : "text-slate-600 hover:text-slate-900"
                   }`}
                 >
                   {item.label}
@@ -49,7 +49,11 @@ export const NavbarComponent: React.FC = () => {
                     <motion.div
                       className="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-500"
                       layoutId="underline"
-                      transition={{ type: 'spring', stiffness: 380, damping: 40 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 380,
+                        damping: 40,
+                      }}
                     />
                   )}
                 </Link>
@@ -102,7 +106,7 @@ export const NavbarComponent: React.FC = () => {
             {showSearch && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
+                animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
                 className="pb-4"
               >
@@ -122,7 +126,7 @@ export const NavbarComponent: React.FC = () => {
           {isOpen && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
+              animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               className="md:hidden border-t border-slate-200 bg-slate-50"
             >
@@ -134,8 +138,8 @@ export const NavbarComponent: React.FC = () => {
                     onClick={() => setIsOpen(false)}
                     className={`block px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                       isActive(item.href)
-                        ? 'bg-emerald-100 text-emerald-700'
-                        : 'text-slate-600 hover:bg-slate-200'
+                        ? "bg-emerald-100 text-emerald-700"
+                        : "text-slate-600 hover:bg-slate-200"
                     }`}
                   >
                     {item.label}

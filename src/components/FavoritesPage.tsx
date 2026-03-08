@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { FiHeart } from 'react-icons/fi';
-import { RecipeCard } from './RecipeCard';
-import { RecipeModal } from './RecipeModal';
-import { useRecipeStore } from '../store/recipeStore';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { FiHeart } from "react-icons/fi";
+import { RecipeCard } from "./RecipeCard";
+import { RecipeModal } from "./RecipeModal";
+import { useRecipeStore } from "../store/recipeStore";
 
 export const FavoritesPage: React.FC = () => {
   const { recipes, favorites, selectRecipe, selectedRecipe } = useRecipeStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const favoriteRecipes = recipes.filter((recipe) => favorites.includes(recipe.id));
+  const favoriteRecipes = recipes.filter((recipe) =>
+    favorites.includes(recipe.id),
+  );
 
   const handleRecipeClick = (recipe: any) => {
     selectRecipe(recipe);
@@ -41,7 +43,8 @@ export const FavoritesPage: React.FC = () => {
               Your Favorite Recipes
             </h1>
             <p className="text-xl text-rose-50 mb-4">
-              {favoriteRecipes.length} recipe{favoriteRecipes.length !== 1 ? 's' : ''} saved
+              {favoriteRecipes.length} recipe
+              {favoriteRecipes.length !== 1 ? "s" : ""} saved
             </p>
           </motion.div>
         </div>
@@ -56,7 +59,9 @@ export const FavoritesPage: React.FC = () => {
             className="bg-white rounded-xl p-12 shadow-lg text-center"
           >
             <FiHeart className="w-16 h-16 text-slate-300 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold text-slate-900 mb-2">No Favorites Yet</h2>
+            <h2 className="text-2xl font-bold text-slate-900 mb-2">
+              No Favorites Yet
+            </h2>
             <p className="text-slate-600 mb-6">
               Start exploring recipes and save your favorites to see them here!
             </p>
@@ -76,10 +81,7 @@ export const FavoritesPage: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
               >
-                <RecipeCard
-                  recipe={recipe}
-                  onClick={handleRecipeClick}
-                />
+                <RecipeCard recipe={recipe} onClick={handleRecipeClick} />
               </motion.div>
             ))}
           </div>

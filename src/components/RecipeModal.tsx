@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   FiX,
   FiClock,
@@ -9,9 +9,9 @@ import {
   FiHeart,
   FiDownload,
   FiPrinter,
-} from 'react-icons/fi';
-import { Recipe } from '../types/recipe';
-import { useRecipeStore } from '../store/recipeStore';
+} from "react-icons/fi";
+import { Recipe } from "../types/recipe";
+import { useRecipeStore } from "../store/recipeStore";
 import {
   copyRecipeToClipboard,
   shareRecipe,
@@ -19,7 +19,7 @@ import {
   downloadRecipeAsPDF,
   adjustIngredient,
   calculateServingMultiplier,
-} from '../utils/recipeUtils';
+} from "../utils/recipeUtils";
 
 interface RecipeModalProps {
   recipe: Recipe | null;
@@ -27,7 +27,11 @@ interface RecipeModalProps {
   onClose: () => void;
 }
 
-export const RecipeModal: React.FC<RecipeModalProps> = ({ recipe, isOpen, onClose }) => {
+export const RecipeModal: React.FC<RecipeModalProps> = ({
+  recipe,
+  isOpen,
+  onClose,
+}) => {
   const { toggleFavorite, isFavorite } = useRecipeStore();
   const [servings, setServings] = useState(recipe?.servings || 1);
   const [showMoreActions, setShowMoreActions] = useState(false);
@@ -39,19 +43,19 @@ export const RecipeModal: React.FC<RecipeModalProps> = ({ recipe, isOpen, onClos
   const multiplier = calculateServingMultiplier(recipe.servings, servings);
 
   const difficultyColors = {
-    easy: 'bg-emerald-100 text-emerald-700',
-    medium: 'bg-amber-100 text-amber-700',
-    hard: 'bg-rose-100 text-rose-700',
+    easy: "bg-emerald-100 text-emerald-700",
+    medium: "bg-amber-100 text-amber-700",
+    hard: "bg-rose-100 text-rose-700",
   };
 
   const handleCopy = async () => {
     const success = await copyRecipeToClipboard(recipe);
-    if (success) alert('Recipe copied to clipboard!');
+    if (success) alert("Recipe copied to clipboard!");
   };
 
   const handleShare = async () => {
     const success = await shareRecipe(recipe);
-    if (success) alert('Recipe shared successfully!');
+    if (success) alert("Recipe shared successfully!");
   };
 
   return (
@@ -96,8 +100,11 @@ export const RecipeModal: React.FC<RecipeModalProps> = ({ recipe, isOpen, onClos
 
                 {/* Difficulty Badge */}
                 <div className="absolute top-4 left-4">
-                  <span className={`inline-block px-4 py-2 rounded-full font-semibold text-sm ${difficultyColors[recipe.difficulty]}`}>
-                    {recipe.difficulty.charAt(0).toUpperCase() + recipe.difficulty.slice(1)}
+                  <span
+                    className={`inline-block px-4 py-2 rounded-full font-semibold text-sm ${difficultyColors[recipe.difficulty]}`}
+                  >
+                    {recipe.difficulty.charAt(0).toUpperCase() +
+                      recipe.difficulty.slice(1)}
                   </span>
                 </div>
               </div>
@@ -106,7 +113,9 @@ export const RecipeModal: React.FC<RecipeModalProps> = ({ recipe, isOpen, onClos
               <div className="p-8 space-y-8">
                 {/* Title and Actions */}
                 <div className="space-y-4">
-                  <h1 className="text-4xl font-bold text-slate-900">{recipe.title}</h1>
+                  <h1 className="text-4xl font-bold text-slate-900">
+                    {recipe.title}
+                  </h1>
                   <p className="text-lg text-slate-600">{recipe.description}</p>
 
                   {/* Quick Actions */}
@@ -117,12 +126,14 @@ export const RecipeModal: React.FC<RecipeModalProps> = ({ recipe, isOpen, onClos
                       onClick={() => toggleFavorite(recipe.id)}
                       className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
                         favorite
-                          ? 'bg-rose-100 text-rose-600 hover:bg-rose-200'
-                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                          ? "bg-rose-100 text-rose-600 hover:bg-rose-200"
+                          : "bg-slate-100 text-slate-600 hover:bg-slate-200"
                       }`}
                     >
-                      <FiHeart className={`w-5 h-5 ${favorite ? 'fill-current' : ''}`} />
-                      {favorite ? 'Saved' : 'Save'}
+                      <FiHeart
+                        className={`w-5 h-5 ${favorite ? "fill-current" : ""}`}
+                      />
+                      {favorite ? "Saved" : "Save"}
                     </motion.button>
 
                     <motion.button
@@ -160,7 +171,7 @@ export const RecipeModal: React.FC<RecipeModalProps> = ({ recipe, isOpen, onClos
                     {showMoreActions && (
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
+                        animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
                         className="flex gap-3 flex-wrap"
                       >
@@ -201,26 +212,36 @@ export const RecipeModal: React.FC<RecipeModalProps> = ({ recipe, isOpen, onClos
                 {/* Recipe Info */}
                 <div className="grid grid-cols-4 gap-4 bg-slate-50 rounded-xl p-6">
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-emerald-600">{recipe.prepTime}</div>
+                    <div className="text-2xl font-bold text-emerald-600">
+                      {recipe.prepTime}
+                    </div>
                     <div className="text-sm text-slate-600">Prep</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-emerald-600">{recipe.cookTime}</div>
+                    <div className="text-2xl font-bold text-emerald-600">
+                      {recipe.cookTime}
+                    </div>
                     <div className="text-sm text-slate-600">Cook</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-emerald-600">{servings}</div>
+                    <div className="text-2xl font-bold text-emerald-600">
+                      {servings}
+                    </div>
                     <div className="text-sm text-slate-600">Servings</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-emerald-600">{recipe.cuisine}</div>
+                    <div className="text-2xl font-bold text-emerald-600">
+                      {recipe.cuisine}
+                    </div>
                     <div className="text-sm text-slate-600">Cuisine</div>
                   </div>
                 </div>
 
                 {/* Servings Adjuster */}
                 <div className="border border-slate-200 rounded-xl p-6">
-                  <h3 className="font-semibold text-slate-900 mb-4">Adjust Servings</h3>
+                  <h3 className="font-semibold text-slate-900 mb-4">
+                    Adjust Servings
+                  </h3>
                   <div className="flex items-center gap-4">
                     <button
                       onClick={() => setServings(Math.max(1, servings - 1))}
@@ -232,7 +253,9 @@ export const RecipeModal: React.FC<RecipeModalProps> = ({ recipe, isOpen, onClos
                       <input
                         type="number"
                         value={servings}
-                        onChange={(e) => setServings(parseInt(e.target.value) || 1)}
+                        onChange={(e) =>
+                          setServings(parseInt(e.target.value) || 1)
+                        }
                         className="w-16 px-3 py-2 border border-slate-300 rounded-lg text-center font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500"
                       />
                       <span className="text-slate-600">servings</span>
@@ -248,7 +271,9 @@ export const RecipeModal: React.FC<RecipeModalProps> = ({ recipe, isOpen, onClos
 
                 {/* Ingredients */}
                 <div className="space-y-4">
-                  <h2 className="text-2xl font-bold text-slate-900">Ingredients</h2>
+                  <h2 className="text-2xl font-bold text-slate-900">
+                    Ingredients
+                  </h2>
                   <div className="space-y-3">
                     {recipe.ingredients.map((ingredient) => (
                       <motion.div
@@ -263,7 +288,8 @@ export const RecipeModal: React.FC<RecipeModalProps> = ({ recipe, isOpen, onClos
                         />
                         <div className="flex-1">
                           <p className="text-slate-900 font-medium">
-                            {adjustIngredient(ingredient.amount, multiplier)} {ingredient.unit} {ingredient.name}
+                            {adjustIngredient(ingredient.amount, multiplier)}{" "}
+                            {ingredient.unit} {ingredient.name}
                           </p>
                         </div>
                       </motion.div>
@@ -273,7 +299,9 @@ export const RecipeModal: React.FC<RecipeModalProps> = ({ recipe, isOpen, onClos
 
                 {/* Instructions */}
                 <div className="space-y-4">
-                  <h2 className="text-2xl font-bold text-slate-900">Instructions</h2>
+                  <h2 className="text-2xl font-bold text-slate-900">
+                    Instructions
+                  </h2>
                   <div className="space-y-4">
                     {recipe.steps.map((step, index) => (
                       <motion.div
