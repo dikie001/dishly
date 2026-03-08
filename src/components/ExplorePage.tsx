@@ -5,22 +5,64 @@ import { RecipeCard } from "./RecipeCard";
 import { RecipeModal } from "./RecipeModal";
 import { Loader } from "./Loaders";
 import { useRecipeStore } from "../store/recipeStore";
-import { sampleRecipes } from "../data/sampleRecipes";
+import { mealDBService } from "../services/mealDBService";
 
 export const ExplorePage: React.FC = () => {
   const { setRecipes, getFilteredRecipes, selectRecipe, selectedRecipe } =
     useRecipeStore();
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Simulate loading
-    const timer = setTimeout(() => {
-      setRecipes(sampleRecipes);
-      setIsLoading(false);
-    }, 1200);
+    const fetchRecipes = async () => {
+      try {
+        setIsLoading(true);
+        setError(null);
 
-    return () => clearTimeout(timer);
+        // Fetch categories first
+        const categories = await mealDBService.getCategories();
+        if (categories.length === 0) {
+          setError("Failed to load recipes");
+          setIsLoading(false);
+          return;
+        }
+
+        // Fetch meals from multiple categories
+        const allMeals: any[] = [];
+        const categoriesToFetch = categories.slice(0, 5); // Get first 5 categories for demo
+
+        for (const category of categoriesToFetch) {
+          try {
+            const meals = await mealDBService.getMealsByCategory(
+              category.strCategory
+            );
+            allMeals.push(...meals.slice(0, 4)); // Get 4 meals per category
+          } catch (err) {
+            console.error(`Failed to fetch ${category.strCategory}:`, err);
+          }
+        }
+
+        if (allMeals.length === 0) {
+          setError("No recipes found");
+          setIsLoading(false);
+          return;
+        }
+
+        // Convert meals to Recipe format
+        const recipes = allMeals.map((meal) =>
+          mealDBService.mealToRecipe(meal)
+        );
+        setRecipes(recipes);
+      } catch (err) {
+        console.error("Error loading recipes:", err);
+        setError("Failed to load recipes from the server");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchRecipes();
   }, [setRecipes]);
 
   const recipes = getFilteredRecipes();
@@ -65,6 +107,23 @@ export const ExplorePage: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Filters */}
         <FilterComponent />
+
+        {/* Error State */}
+        {error && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-red-50 border border-red-200 rounded-xl p-6 mb-8 text-center"
+          >
+            <p className="text-red-700 font-medium">{error}</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="mt-4 px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+            >
+              Try Again
+            </button>
+          </motion.div>
+        )}
 
         {/* Loading State */}
         {isLoading ? (

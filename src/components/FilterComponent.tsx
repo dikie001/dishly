@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiFilter, FiX, FiSearch } from "react-icons/fi";
 import { useRecipeStore } from "../store/recipeStore";
 import { RecipeFilter } from "../types/recipe";
+import { mealDBService } from "../services/mealDBService";
 
 interface FilterComponentProps {
   onFilterChange?: () => void;
@@ -11,9 +12,10 @@ interface FilterComponentProps {
 export const FilterComponent: React.FC<FilterComponentProps> = ({
   onFilterChange,
 }) => {
-  const { filter, setFilter, clearFilter } = useRecipeStore();
+  const { filter, setFilter, clearFilter, setRecipes } = useRecipeStore();
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState(filter.searchTerm || "");
+  const [isSearching, setIsSearching] = useState(false);
   const [selectedDifficulty, setSelectedDifficulty] = useState<string>(
     filter.difficulty || "",
   );
@@ -24,15 +26,36 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
 
   const cuisines = [
     "Italian",
-    "Asian",
-    "Mexican",
-    "Indian",
-    "Mediterranean",
     "American",
+    "British",
+    "Canadian",
+    "Chinese",
     "French",
+    "Indian",
+    "Mexican",
     "Thai",
+    "Japanese",
   ];
   const difficulties = ["easy", "medium", "hard"];
+
+  // Handle search with API
+  const handleSearch = async (query: string) => {
+    setSearchTerm(query);
+    if (!query.trim()) return;
+
+    try {
+      setIsSearching(true);
+      const meals = await mealDBService.searchMeals(query);
+      if (meals.length > 0) {
+        const recipes = meals.map((meal) => mealDBService.mealToRecipe(meal));
+        setRecipes(recipes);
+      }
+    } catch (err) {
+      console.error("Search error:", err);
+    } finally {
+      setIsSearching(false);
+    }
+  };
 
   const handleApplyFilters = () => {
     const newFilter: RecipeFilter = {
@@ -70,15 +93,9 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
             type="text"
             placeholder="Search recipes by name or ingredient..."
             value={searchTerm}
-            onChange={(e) => {
-              setSearchTerm(e.target.value);
-              const newFilter: RecipeFilter = {
-                ...filter,
-                searchTerm: e.target.value || undefined,
-              };
-              setFilter(newFilter);
-            }}
-            className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+            onChange={(e) => handleSearch(e.target.value)}
+            disabled={isSearching}
+            className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all disabled:opacity-60"
           />
         </div>
       </div>
